@@ -1,0 +1,14 @@
+{
+  "name": "shoply",
+  "version": "1.0.0",
+  "description": "An ecommerce website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Deepanshu Arya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
