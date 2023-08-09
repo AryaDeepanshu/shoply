@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.jumbotron {
+    background-image: url('path-to-your-background-image.jpg');
+    background-size: cover;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+}
+
+.jumbotron h1 {
+    color: #fff;
+    font-size: 48px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.product-card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.product-card h3 {
+    margin-top: 10px;
+    font-size: 24px;
+}
+
+.product-card p {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #777;
+}
+
+.cta-section {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+}
+
+.cta-section h2 {
+    font-size: 36px;
+}
+
+.cta-section p {
+    font-size: 18px;
+    color: #777;
+}
+
+.cta-btn {
+    margin-top: 20px;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
