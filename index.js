@@ -1,4 +1,5 @@
 const express = require('express')
+const db = require('./utils/db/db')
 const app = express()
 const port = 5000
 
@@ -20,6 +21,8 @@ app.get('/main', (req, res)=>{
 app.get('/signup', (req, res)=>{
     res.render("signup")
 })
-app.listen(port, ()=>{
-    console.log(`Server running on port: ${port}`)
+db.init().then(() => {
+    app.listen(port, ()=>{
+        console.log(`Server running on port: ${port}`)
+    })
 })
