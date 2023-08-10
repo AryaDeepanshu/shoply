@@ -1,8 +1,9 @@
 const UserModel = require('../../models/User.js')
 
 function signUp(req, res){
+    console.log(req.body)
     const user = {
-        username: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password
     }
@@ -10,7 +11,7 @@ function signUp(req, res){
         req.session.message = "login with account created"
         res.status(200).redirect('/login')
     }).catch( (error)=>{
-        req.session.message = error.message
+        req.session.message = "Account already exists"
         res.status(500).redirect('/signup')
         return
     })

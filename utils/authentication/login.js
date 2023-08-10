@@ -1,6 +1,6 @@
 const UserModel = require('../../models/User.js')
 
-function loginAUthentication(req, res){
+function login(req, res){
     let email = req.body.email
     let password = req.body.password
     UserModel.findOne({email: email, password: password}).then((user)=>{
@@ -9,7 +9,10 @@ function loginAUthentication(req, res){
             res.status(200).redirect('/login')
             return
         }
-        // will login here
+        req.session.username = user.username
+        req.session.email = user.email
+        req.session.isLoggedIn = true
+        res.redirect("/main")
 
     }).catch((error)=>{
         req.session.message = error.message
@@ -18,4 +21,4 @@ function loginAUthentication(req, res){
     })
 }
 
-module.exports = loginAUthentication
+module.exports = login
