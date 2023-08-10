@@ -2,12 +2,14 @@ const express = require('express')
 const session = require('express-session')
 const db = require('./utils/db/db')
 const app = express()
-const port = 5000
+const port = 8080
 const Product = require('./models/Product')
 const getProducts = require('./utils/products/getProducts')
 const signUp = require('./utils/authentication/signUp')
 const login = require('./utils/authentication/login')
 const logout = require('./utils/authentication/logout')
+const changePassword = require('./utils/authentication/changePassword')
+const email = require('./utils/mailer/email')
 app.use(express.static('public/assets/'))
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
@@ -27,6 +29,7 @@ app.get('/', (req, res) => {
     res.render('index', {details: req.session.username})
 })
 
+app.get('/email', email)
 app.get('/login', (req, res) => {
     message = req.session.message
     req.session.message = null
@@ -46,7 +49,15 @@ app.get('/signup', (req, res) => {
     res.render('signup', {message: message, details: req.session.username})
 })
 app.get('/logout', logout)
+app.get('/changePassword', (req, res)=>{
+    if (!req.session.isLoggedIn){
+        res.redirect('/login')
+        return
+    }
+    res.render('changePassword', {details: req.session.username, error: null})
+})
 
+app.post('/changePassword', changePassword)
 app.get('/main', (req, res) => {
     if (!req.session.isLoggedIn){
         res.redirect('/login')
