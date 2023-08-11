@@ -27,6 +27,6 @@ npm start
     - [x] **User story 4:**  When user click on the "View Details" show the description of the product in popup from the already fetched data. If the product description is not already fetched then check on the server side and fetch that information using API and save that in array also.
     - [x] **User story 5:**  When user click on "Load more" fetch the next 5 products from the file and show them on the page.
 - [ ] Project - E-Commerce - 2
-    - [ ] **Verify email on Create Account:** When you create a new account, send a mail to the user for authentication of the email. After successfully authentication redirect to the Product Listing page.
+    - [x] **Verify email on Create Account:** When you create a new account, send a mail to the user for authentication of the email. After successfully authentication redirect to the Product Listing page.
     - [x] **Change Password:** User can change her password and send a mail that password changed successfully.
-    - [ ] **Forgot password:** Add a functionality for forgot password, Send a dynamic link on mail to reset the password
+    - [x] **Forgot password:** Add a functionality for forgot password, Send a dynamic link on mail to reset the password

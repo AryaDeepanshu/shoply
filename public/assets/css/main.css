@@ -1,0 +1,49 @@
+.text-center {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+    color: #333;
+}
+
+#product-details h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#product-details p {
+    color: #555;
+}
+
+@media (max-width: 767px) {
+    .card {
+        margin-bottom: 20px;
+    }
+}

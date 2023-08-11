@@ -5,19 +5,21 @@ function login(req, res){
     let password = req.body.password
     UserModel.findOne({email: email, password: password}).then((user)=>{
         if(!user){
-            req.session.message = "Wrong credentials"
-            res.status(200).redirect('/login')
+            res.status(200).send({error: "Wrong credentials"})
+            return
+        }
+        if(!user.isVerified){
+            res.status(200).send({error: "Please verify your email first"})
             return
         }
         req.session.username = user.username
         req.session.email = user.email
         req.session.isLoggedIn = true
-        res.redirect("/main")
+        res.status(200).send({login: true})
+        return
 
     }).catch((error)=>{
-        req.session.message = error.message
-        res.status(500).redirect('/login')
-        return
+        res.status(500).send({error: error})
     })
 }
 

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const newPasswordError = document.getElementById('new-password-error');
     const confirmNewPasswordError = document.getElementById('confirm-new-password-error');
     const passwordRequirementError = document.getElementById('password-requirement-error');
+    const successMessage = document.getElementById('success-message');
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E])[^\s]{8,}$/;
     
     changePasswordForm.addEventListener('submit', function (event) {
@@ -51,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 newPassword: newPasswordValue,
                 confirmPassword: confirmNewPasswordValue
             }
-            console.log(data)
             fetch("/changePassword", {
                 method: 'post',
                 headers: {
@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((response) => {
                 return response.json()
             }).then((res) => {
-                console.log(res)
                 if (res.error === "Wrong Current Password") {
                     currentPasswordError.textContent = res.error;
                 }
@@ -69,7 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     confirmNewPasswordError.textContent = res.error;
                 }
                 else {
-                    window.location.href = "/main";
+                    changePasswordForm.reset();
+                    successMessage.style.display="block";
+                    successMessage.textContent="Password changed successfully";
                 }
             }).catch((error) => {
                 console.log(error)

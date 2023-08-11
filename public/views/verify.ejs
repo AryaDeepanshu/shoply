@@ -1,0 +1,16 @@
+<h1><% if(error){ %><%= error %><% } %></h1>
+<h1 id="error"></h1>
+
+<script>
+    let countdown = 5;
+    const error = document.getElementById('error')
+
+    const countdownInterval = setInterval(() => {
+        error.textContent = `. You will be redirected to login page in ${countdown} seconds`
+        countdown--;
+        if (countdown === 0) {
+            clearInterval(countdownInterval);
+            window.location.href = '/login';
+        }
+    }, 1000);
+</script>

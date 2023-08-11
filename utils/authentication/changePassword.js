@@ -1,6 +1,6 @@
 const UserModel = require('../../models/User.js')
+const sendMail = require('../mailer/sendMail.js')
 const isValidPassword = require('./isValidPassword.js')
-const changePasswordEmail = require('../mailer/passwordChanged.js')
 
 function changePassword(req, res){
     if(!req.session.isLoggedIn){
@@ -14,12 +14,10 @@ function changePassword(req, res){
     // server-side form validation
     updatePassword = (newPassword === confirmPassword)?newPassword:null
     if(!updatePassword){
-        console.log("matcherror")
         res.status(200).send({error: "Confirm new password does not match"})
         return
     }
     if(!isValidPassword(updatePassword)){
-        console.log("matcherror")
         res.status(200).send({error: "Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special symbol."})
         return
     }
@@ -28,17 +26,17 @@ function changePassword(req, res){
     UserModel.findOne({email: email}).then((user)=>{
         if(user){
             if(user.password != currentPassword){
-                console.log("wrongpass")
                 res.status(200).send({error: "Wrong Current Password"})
                 return
             }
-            UserModel.findOneAndUpdate({email: email},{password: updatePassword} ).then(()=>{
-                console.log("done")
-                changePasswordEmail(email)
+            user.password = updatePassword
+            user.save().then(()=>{
+                content = {
+                    subject: "ALERT: Password Changed",
+                    html: "Your shoply account password was changed successfully.",
+                }
+                sendMail(email, content)
                 res.status(200).send({sucess: "Password Changed"})
-                return
-            }).catch((err)=>{
-                console.log(err)
             })
         }
     })  
