@@ -12,6 +12,7 @@ const changePassword = require('./utils/authentication/changePassword')
 const email = require('./utils/mailer/email')
 app.use(express.static('public/assets/'))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.set('view engine', 'ejs')
 app.set("views", __dirname + "/public/views")
 app.use(session({
