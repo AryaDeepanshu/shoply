@@ -3,7 +3,7 @@ function logout(req, res){
         if (err) {
             console.error(err);
         } else {
-            res.render('/', {details: null})
+            res.render('main', {details: null})
         }
     }); 
 }

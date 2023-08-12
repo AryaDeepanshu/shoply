@@ -33,7 +33,7 @@ function changePassword(req, res){
             user.save().then(()=>{
                 content = {
                     subject: "ALERT: Password Changed",
-                    html: "Your shoply account password was changed successfully.",
+                    text: "Your shoply account password was changed successfully.",
                 }
                 sendMail(email, content)
                 res.status(200).send({sucess: "Password Changed"})
