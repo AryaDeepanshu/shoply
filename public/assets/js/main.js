@@ -31,7 +31,7 @@ function loadProducts() {
         productItem.classList.add('col-md-4', 'mb-4');
         productItem.innerHTML = `
             <div class="card">
-                <img src="${product.image}" class="card-img-top" alt="${product.Name}">
+                <img src="uploads/${product.image}.jpeg" class="card-img-top" alt="${product.Name}">
                 <div class="card-body">
                     <h5 class="card-title">${product.Name}</h5>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" data-product-id="${product._id}">View Details</button>
@@ -67,7 +67,7 @@ function fetchProductDescription(productId) {
 function displayProductDetails(product) {
     productDetails.innerHTML = `
         <h5>${product.Name}</h5>
-        <img src="${product.image}" alt="${product.Name}" class="img-fluid">
+        <img src="uploads/${product.image}.jpeg" alt="${product.Name}" class="img-fluid">
         <p>${product.Description}</p>
         <p>₹ ${product.price}</p>
     `;
