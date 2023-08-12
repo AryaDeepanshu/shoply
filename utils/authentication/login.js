@@ -15,6 +15,7 @@ function login(req, res){
         req.session.username = user.username
         req.session.email = user.email
         req.session.isLoggedIn = true
+        req.session.userId = user._id
         res.status(200).send({login: true})
         return
 

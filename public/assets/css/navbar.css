@@ -2,7 +2,24 @@
     background-color: #333;
 }
 
-.navbar-brand,
+.navbar-brand, .navbar-nav .nav-link {
+    color: #ecf0f1;
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover, .navbar-nav .nav-link:hover {
+    color: #3498db;
+}
+
 .navbar-nav .nav-link {
-    color: #fff;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px; /* Rounded corners */
+    margin: 0 10px; /* Add some space between items */
+    padding: 5px 15px; /* Adjust padding as needed */
+}
+
+.name {
+    margin: 0 10px; /* Add some space between items */
+    padding: 5px 15px; /* Adjust padding as needed */
+    color: #ecf0f1;
 }

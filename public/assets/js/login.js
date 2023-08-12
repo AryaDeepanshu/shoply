@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Message.textContent = res.error
                 }
                 else {
-                    window.location.href = '/main'
+                    window.location.href = '/'
                 }
             })
         }

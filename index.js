@@ -7,6 +7,10 @@ const email = require('./utils/mailer/transporter.js')
 const verify = require('./utils/authentication/verify')
 const signUp = require('./utils/authentication/signUp')
 const logout = require('./utils/authentication/logout')
+const addToCart = require('./utils/cart/addToCart')
+const getCart = require('./utils/cart/getCart')
+const updateQuantity = require('./utils/cart/updateQuantity')
+const removeFromCart = require('./utils/cart/removeFromCart')
 const getProducts = require('./utils/products/getProducts')
 const resetPassword = require('./utils/authentication/resetPassword')
 const changePassword = require('./utils/authentication/changePassword')
@@ -28,19 +32,11 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }))
 app.use(function (req, res, next) {
     if (!req.user)
-        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    next();
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+    next()
 })
 
 app.get('/', (req, res) => {
-    res.render('index', { details: req.session.username })
-})
-
-app.get('/main', (req, res) => {
-    if (!req.session.isLoggedIn) {
-        res.redirect('/login')
-        return
-    }
     res.render('main', { details: req.session.username })
 })
 
@@ -49,7 +45,7 @@ app.get('/login', (req, res) => {
     message = req.session.message
     req.session.message = null
     if (req.session.isLoggedIn) {
-        res.redirect("/main")
+        res.redirect("/")
         return
     }
     res.render('login', { message: message, details: req.session.username })
@@ -59,7 +55,7 @@ app.get('/signup', (req, res) => {
     message = req.session.message
     req.session.message = null
     if (req.session.isLoggedIn) {
-        res.redirect("/main")
+        res.redirect("/")
         return
     }
     res.render('signup', { message: message, details: req.session.username })
@@ -78,11 +74,23 @@ app.get('/forgetPassword', (req, res) => {
     res.render('forgetPasswordForm', { details: req.session.username, error: null })
 })
 
+app.get('/cart', (req, res) => {
+    if(!req.session.isLoggedIn){
+        res.redirect('/login')
+        return
+    }
+    res.render('cart', { details: req.session.username})
+})
+
+app.get('/getCart', getCart)
+app.post('/addToCart', addToCart)
+
 app.get('/logout', logout)
 app.get('/verify', verify)
 app.get('/products', getProducts)
 app.get('/resetPassword', resetPassword)
-
+app.post('/updateQuantity', updateQuantity)
+app.post('/removeFromCart', removeFromCart)
 
 app.post('/login', login)
 app.post('/signup', signUp)
