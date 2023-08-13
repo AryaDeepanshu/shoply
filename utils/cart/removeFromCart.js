@@ -45,7 +45,7 @@ async function removeFromCart(req, res) {
                         title: product.Name,
                         price: product.price,
                         quantity: item.quantity,
-                        stock: product.stock
+                        totalPrice: item.quantity * product.price
                     }
                 })
                 res.status(200).send({products})

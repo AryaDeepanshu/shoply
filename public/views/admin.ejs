@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .content {
+            padding: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <%- include('partials/sidebar') %>
+        <!-- Content -->
+        <div class="content">
+            <div class="row" id="add-product">
+                <div class="col-md-6">
+                    <h2>Add Product</h2>
+                    <!-- Add product form -->
+                    <form id="add-product-form">
+                        <div class="mb-3">
+                            <label for="product-name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="product-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-price" class="form-label">Product Price</label>
+                            <input type="number" class="form-control" id="product-price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-quantity" class="form-label">Product Quantity</label>
+                            <input type="number" class="form-control" id="product-quantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-description" class="form-label">Product Description</label>
+                            <textarea class="form-control" id="product-description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product-image" class="form-label">Product Image</label>
+                            <input type="file" class="form-control" id="product-image" accept="image/*" required>
+                        </div>
+                        <button type="submit" id="submit-btn" class="btn btn-primary">Add Product</button>
+                    </form>
+                </div>
+                <div class="col-md-6 mt-md-0 mt-4">
+                    <h2>Product Preview</h2>
+                    <!-- Product preview section -->
+                    <div id="product-preview">
+                        <h3>Preview</h3>
+                        <div class="card" style="width: 18rem;">
+                            <img id="preview-image" src="https://via.placeholder.com/150" class="card-img-top" alt="Product Preview">
+                            <div class="card-body">
+                                <h5 class="card-title" id="preview-name">Product Name</h5>
+                                <p class="card-text" id="preview-description">Product Description</p>
+                                <p class="card-text" id="preview-price">Price: $0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ... other sections ... -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('add-product-form');
+            const previewImage = document.getElementById('preview-image');
+            const previewName = document.getElementById('preview-name');
+            const previewDescription = document.getElementById('preview-description');
+            const previewPrice = document.getElementById('preview-price');
+            const imageInput = document.getElementById('product-image')
+
+            form.addEventListener('input', updatePreview);
+            imageInput.addEventListener('change', () => {
+                const file1 = imageInput.files[0];
+                if (file1){
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file1);
+                }
+            });
+
+            function updatePreview() {
+                const productName = document.getElementById('product-name').value;
+                const productDescription = document.getElementById('product-description').value;
+                const productPrice = document.getElementById('product-price').value;
+                previewName.textContent = productName || 'Product Name';
+                previewDescription.textContent = productDescription || 'Product Description';
+                previewPrice.textContent = productPrice ? `Price: $${productPrice}` : 'Price: ₹0.00'
+
+            }
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.addEventListener('click', (event) => {
+                const button = event.target
+                event.preventDefault();
+                const formData = new FormData(form);
+                formData.append('productName', document.getElementById('product-name').value);
+                formData.append('productPrice', document.getElementById('product-price').value);
+                formData.append('productQuantity', document.getElementById('product-quantity').value);
+                formData.append('productDescription', document.getElementById('product-description').value);
+
+                const productImageInput = document.getElementById('product-image');
+                if (productImageInput.files.length > 0) {
+                    const file = productImageInput.files[0]
+                    if (file.size > 250 * 1024) {
+                        alert('Image size exceeds 250 KB.');
+                        return;
+                    }
+                formData.append('productImage', productImageInput.files[0]);
+                }
+                fetch('/addProduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    button.textContent = 'Product added ✓'
+                    button.disabled = true
+                    setTimeout(() => {
+                        button.textContent = 'Add Product'
+                        button.disabled = false
+                    }, 2000)
+                    previewName.textContent = data.productName || 'Product Name';
+                    previewDescription.textContent = data.productDescription || 'Product Description';
+                    previewPrice.textContent = data.productPrice ? `Price: $${data.productPrice}` : 'Price: $0.00';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });    
+    </script>
+
+</body>
+</html>

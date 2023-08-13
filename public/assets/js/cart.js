@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const cartItem = document.createElement('div')
             cartItem.className = 'cart-item'
             cartItem.innerHTML = `
-    <img src="uploads/${product.image}.jpeg" alt="${product.title}">
+    <img src="uploads/${product.image}" alt="${product.title}">
     <div class="item-details">
       <div class="item-title">${product.title}</div>
       <div class="item-price">₹${product.totalPrice}</div>
@@ -64,10 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     function updateQuantity(productId, change) {
-        let minusBtns = document.querySelectorAll('.minus-btn')
-        let plusBtns = document.querySelectorAll('.plus-btn')
         let quantityValues = document.querySelectorAll(`.quantity-value[data-product-id="${productId}"]`)
-        let removeBtns = document.querySelectorAll('.remove-btn')
         fetch('/updateQuantity', {
             method: 'POST',
             headers: {

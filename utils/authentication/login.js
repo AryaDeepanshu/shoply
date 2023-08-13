@@ -16,9 +16,9 @@ function login(req, res){
         req.session.email = user.email
         req.session.isLoggedIn = true
         req.session.userId = user._id
+        req.session.isAdmin = user.isAdmin
         res.status(200).send({login: true})
         return
-
     }).catch((error)=>{
         res.status(500).send({error: error})
     })

@@ -39,3 +39,11 @@ npm start
     - [x] **User Not logged In:** If the user clicks on any of these buttons and not logged in then redirect to the login page and after login, he should come on this page only.
     - [x] **Add to Cart:** When the user clicks on the Add cart to add the product to the cart. Once we start maintaining the cart then load the cart at the time of the login itself.
     - [x] **View Cart:** On the "View Cart" page there should be 2 buttons with each item +/- quantity and delete the product from the cart. Maintain the cart accordingly. And when increasing the quantity check whether the stock is available or not.
+
+- [x] Project - E-Commerce - 4
+    - [x] **Introduce new role for Admin:** Differentiate users according to their role.
+    - [x] **Introduce a new Page - Add product:** 
+        * Only Admin can open this page
+        * If someone tries to open this without login, should be redirected to the Login page.
+        * And after login check whether the user is Admin or not. If not Admin then say not authorized to use this page.
+        * Admin can add the new product, update the existing product, and delete the product.* When adding the product proper checks should be there on the Image - Size(up to 250kb), and Type(jpeg, jpg, or png).

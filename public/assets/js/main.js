@@ -30,11 +30,11 @@ function loadProducts() {
         productItem.classList.add('col-md-4', 'mb-4')
         productItem.innerHTML = `
             <div class="card">
-                <img src="uploads/${product.image}.jpeg" class="card-img-top" alt="${product.Name}">
+                <img src="uploads/${product.image}" class="card-img-top" alt="${product.Name}">
                 <div class="card-body">
                     <h5 class="card-title">${product.Name}</h5>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" data-product-id="${product._id}">View Details</button>
-                    <button class="btn btn-primary add-to-cart-btn" product-id="${product._id}">Add to Cart</button>
+                    <button class="btn btn-primary log" data-bs-toggle="modal" data-bs-target="#productModal" data-product-id="${product._id}">View Details</button>
+                    <button class="btn btn-primary log add-to-cart-btn" product-id="${product._id}">Add to Cart</button>
                 </div>
             </div>
         `
@@ -45,10 +45,6 @@ function loadProducts() {
 
 
 document.addEventListener('click', (event) => {
-    redirect = document.getElementById('redirect')
-    if(redirect){
-        window.location.href = '/login'
-    }
     if (event.target.matches('[data-product-id]')) {
         const productId = event.target.getAttribute('data-product-id')
         const product = products.find(p => p._id === productId)
@@ -61,9 +57,11 @@ document.addEventListener('click', (event) => {
 })
 
 document.addEventListener('click', (event) => {
+    if(event.target.textContent == "Add to Cart")
     redirect = document.getElementById('redirect')
-    if(redirect){
+    if(redirect &&(event.target.textContent == "Add to Cart")){
         window.location.href = '/login'
+        return
     }
     if (event.target.matches('.add-to-cart-btn')) {
         const button = event.target
@@ -99,7 +97,7 @@ function fetchProductDescription(productId) {
 function displayProductDetails(product) {
     productDetails.innerHTML = `
         <h5>${product.Name}</h5>
-        <img src="uploads/${product.image}.jpeg" alt="${product.Name}" class="img-fluid">
+        <img src="uploads/${product.image}" alt="${product.Name}" class="img-fluid">
         <p>${product.Description}</p>
         <p>₹ ${product.price}</p>
     `
