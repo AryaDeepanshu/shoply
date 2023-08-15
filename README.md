@@ -1,6 +1,13 @@
 # Shoply
 An ecommerce web project using Node, Express,  EJS, MongoDB
 
+Live link: https://shoply.azurewebsites.net
+
+Admin Details
+```
+    username: admin@admin.com
+    password: Admin@123
+```
 ________________________________
 
 ### Development Requirements
